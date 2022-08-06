@@ -1,7 +1,12 @@
 package colorgrid.service;
 
-public class ColorGridService {
+import java.util.HashMap;
+import java.util.Map;
 
+public class ColorGridService {
+	
+
+	private HashMap<Integer, String> colors;
 	private int rows = 12;
 	private int columns = 10;
 	
@@ -13,6 +18,11 @@ public class ColorGridService {
 
 	private int count;
 
+	
+	public ColorGridService(Map<Integer, String> colors) {
+		this.colors = (HashMap<Integer, String>) colors;
+	}
+	
 	private boolean isValid(int x, int y, int key, int[][] input) {
 		if (x < rows && y < columns && x >= 0 && y >= 0) {
 			return visited[x][y] == 0 && input[x][y] == key;
@@ -62,7 +72,7 @@ public class ColorGridService {
 		return -1;
 	}
 
-	public int computeLargestConnectedGrid(int[][] input) {
+	public String computeLargestConnectedGrid(int[][] input) {
 		int currentMax = Integer.MIN_VALUE;
 		inputData = input;
 		rows = input.length;
@@ -93,6 +103,10 @@ public class ColorGridService {
 				}
 			}
 		}
-		return getFinalResultAsInt(currentMax);
+		return getMostContinuesColor(getFinalResultAsInt(currentMax));
+	}
+	
+	private String getMostContinuesColor(int result) {
+		return colors.get(result);
 	}
 }
